@@ -1,0 +1,184 @@
+<?xml version="1.0"?>
+<!--
+  For more information on how to configure your ASP.NET application, please visit
+  http://go.microsoft.com/fwlink/?LinkId=169433
+  -->
+<configuration>
+  <configSections>
+    <!-- For more information on Entity Framework configuration, visit http://go.microsoft.com/fwlink/?LinkID=237468 -->
+    <section name="entityFramework" type="System.Data.Entity.Internal.ConfigFile.EntityFrameworkSection, EntityFramework, Version=5.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089" requirePermission="false"/>
+    <section name="log4net" type="log4net.Config.Log4NetConfigurationSectionHandler,log4net"/>
+  </configSections>
+  <log4net>
+    <appender name="RollingFile" type="log4net.Appender.RollingFileAppender">
+      <file value="C:\Temp\log4net1.log"/>
+      <appendToFile value="true"/>
+      <maximumFileSize value="500KB"/>
+      <maxSizeRollBackups value="2"/>
+      <layout type="log4net.Layout.PatternLayout">
+        <conversionPattern value="%date %level %logger - %message%newline"/>
+      </layout>
+    </appender>
+    <root>
+      <level value="All"/>
+      <appender-ref ref="RollingFile"/>
+    </root>
+  </log4net>
+  <!--<connectionStrings>
+    <add name="DefaultConnection" connectionString="Data Source=(LocalDb)\v11.0;Initial Catalog=aspnet-NHHG.Web-20170417130136;Integrated Security=SSPI;AttachDBFilename=|DataDirectory|\aspnet-NHHG.Web-20170417130136.mdf" providerName="System.Data.SqlClient"/>
+  </connectionStrings>-->
+  <connectionStrings/>
+  <appSettings>
+    <add key="webpages:Version" value="2.0.0.0"/>
+    <add key="webpages:Enabled" value="false"/>
+    <add key="PreserveLoginUrl" value="true"/>
+    <add key="ClientValidationEnabled" value="true"/>
+    <add key="UnobtrusiveJavaScriptEnabled" value="true"/>
+    <!--General-->
+    <add key="WebApiVersion" value="9.1"/>
+    <add key="RedirectUrl" value="http://localhost/SdkSample"/>
+    <add key="ParallelTasksCount" value="10"/>
+    <add key="MaxPageSize" value="30"/>
+    <add key="CacheDuration" value="10"/>
+    <!--10 hours-->
+    <add key="RentsBatchId" value="new_xrmrentbatch"/>
+    <add key="RentsBatchName" value="XRM Rent Batch"/>
+    <add key="TestBatch" value=""/>
+    <!--D000000TEST -->
+    <add key="SharePointListId" value="new_xrmrentbatch"/>
+    <add key="SharePointListName" value="XRM Rent Batch"/>
+    <add key="SharePointUrl" value="http://internal2013.nhill.net/DynamicsCRM/"/>
+    <add key="StatementGenPath" value="C:\Work\Workwise\Repos\RentsApp\DCRMNotesIntegration\WatchFiles\"/>
+    <add key="ProcessStatmentsViaTaskTable" value="true"/>
+    <!-- Cloud CRM Static Dev Settings Start-->
+    <add key="TokenEndpoint" value="https://login.windows.net/5e66e4c4-c0f1-4c5c-a3e7-775eb7b48787/oauth2/token"/>
+    <add key="AzureAppClientId" value="b42d9597-1271-469c-a2a7-7e0c946ad188"/>
+    <add key="CacheTimeInMinutes" value="15"/>
+    <!-- Cloud CRM Static Dev Settings End-->
+    <!-- Cloud CRM Dev Settings Start does not work
+    <add key="Address" value="https://nhg-uk-dev-workwise.crm11.dynamics.com/"/>
+    <add key="AzureKeyVaultClientId" value="c4e6e8e6-cda7-470b-aae4-68d1743c6ef4"/>
+    <add key="AzurekeyVaultSeceret" value="qu8Aggvk/bkS6hRe2LVMIYNNyii4K68dpGQ22zyRgwE="/>
+    <add key="UsernameSecretUri" value="https://nhhukscpskvvaultdev.vault.azure.net/secrets/DynamicsEmail"/>
+    <add key="PasswordSecretUri" value="https://nhhukscpskvvaultdev.vault.azure.net/secrets/DynamicsPassword"/>
+    <add key="TasksDataStoreConnectionUri" value="https://nhhukscpskvvaultdev.vault.azure.net/secrets/TasksDataStoreSqlConnectionString"/>
+    Cloud CRM Dev Settings End-->
+
+	  <!--Live settings MA 14/01/22-->
+	  <add key="Address" value="https://nhg-uk-prod-workwise.crm11.dynamics.com/" />
+	  <add key="AzureKeyVaultClientId" value="a2cfe03f-638f-4063-a07e-a3f73702adad" />
+	  <add key="AzurekeyVaultSeceret" value="GslFTP4Xq9qDW43JnNLQs6NzpwLsicmMZlqyjsrL7aw=" />
+	  <add key="UsernameSecretUri" value="https://nhhukscpskvvaultprod.vault.azure.net/secrets/DynamicsEmail" />
+	  <add key="PasswordSecretUri" value="https://nhhukscpskvvaultprod.vault.azure.net/secrets/DynamicsPassword" />
+	  <add key="TasksDataStoreConnectionUri" value="https://nhhukscpskvvaultprod.vault.azure.net/secrets/TasksDataStoreSqlConnectionString" />
+
+
+	  <add key="dcrmurl" value="AuthType=OAuth;Username=#{UserName};Password=#{Password};Url=#{Address};AppId=#{AppId};RedirectUri=app://#{AppId};LoginPrompt=never"/>
+  </appSettings>
+  <!--
+    For a description of web.config changes for .NET 4.5 see http://go.microsoft.com/fwlink/?LinkId=235367.
+
+    The following attributes can be set on the <httpRuntime> tag.
+      <system.Web>
+        <httpRuntime targetFramework="4.5" />
+      </system.Web>
+  -->
+  <system.web>
+    <compilation targetFramework="4.6.2" debug="true">
+      <assemblies>
+        <add assembly="Microsoft.Build.Framework, Version=4.0.0.0, Culture=neutral, PublicKeyToken=B03F5F7F11D50A3A"/>
+      </assemblies>
+    </compilation>
+    <httpRuntime targetFramework="4.5.1" maxRequestLength="200000"/>
+    <authentication mode="Forms">
+      <forms loginUrl="~/Account/Login" timeout="2880"/>
+    </authentication>
+    <customErrors mode="RemoteOnly"/>
+    <pages>
+      <namespaces>
+        <add namespace="System.Web.Helpers"/>
+        <add namespace="System.Web.Mvc"/>
+        <add namespace="System.Web.Mvc.Ajax"/>
+        <add namespace="System.Web.Mvc.Html"/>
+        <add namespace="System.Web.Optimization"/>
+        <add namespace="System.Web.Routing"/>
+        <add namespace="System.Web.WebPages"/>
+      </namespaces>
+    </pages>
+    <httpModules>
+      <add name="TelemetryCorrelationHttpModule" type="Microsoft.AspNet.TelemetryCorrelation.TelemetryCorrelationHttpModule, Microsoft.AspNet.TelemetryCorrelation"/>
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web"/>
+    </httpModules>
+  </system.web>
+  <system.webServer>
+    <modules runAllManagedModulesForAllRequests="true">
+      <remove name="TelemetryCorrelationHttpModule"/>
+      <add name="TelemetryCorrelationHttpModule" type="Microsoft.AspNet.TelemetryCorrelation.TelemetryCorrelationHttpModule, Microsoft.AspNet.TelemetryCorrelation" preCondition="managedHandler"/>
+      <remove name="ApplicationInsightsWebTracking"/>
+      <add name="ApplicationInsightsWebTracking" type="Microsoft.ApplicationInsights.Web.ApplicationInsightsHttpModule, Microsoft.AI.Web" preCondition="managedHandler"/>
+    </modules>
+    <validation validateIntegratedModeConfiguration="false"/>
+    <handlers>
+      <add name="ReportViewerWebControlHandler" preCondition="integratedMode" verb="*" path="Reserved.ReportViewerWebControl.axd" type="Microsoft.Reporting.WebForms.HttpHandler, Microsoft.ReportViewer.WebForms, Version=11.0.0.0, Culture=neutral, PublicKeyToken=89845dcd8080cc91"/>
+    </handlers>
+  </system.webServer>
+  <runtime>
+    <assemblyBinding xmlns="urn:schemas-microsoft-com:asm.v1">
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Helpers" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.Mvc" publicKeyToken="31bf3856ad364e35"/>
+        <bindingRedirect oldVersion="0.0.0.0-5.2.7.0" newVersion="5.2.7.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Web.WebPages.Razor" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-3.0.0.0" newVersion="3.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Memory" publicKeyToken="cc7b13ffcd2ddd51" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-4.0.1.1" newVersion="4.0.1.1"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Newtonsoft.Json" publicKeyToken="30ad4fe6b2a6aeed" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-11.0.0.0" newVersion="11.0.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Microsoft.IdentityModel.Clients.ActiveDirectory" publicKeyToken="31bf3856ad364e35" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-3.19.8.16603" newVersion="3.19.8.16603"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Net.Http" publicKeyToken="b03f5f7f11d50a3a" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-4.2.0.0" newVersion="4.2.0.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="Unity.Abstractions" publicKeyToken="489b6accfaf20ef0" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-5.11.6.0" newVersion="5.11.6.0"/>
+      </dependentAssembly>
+      <dependentAssembly>
+        <assemblyIdentity name="System.Runtime.CompilerServices.Unsafe" publicKeyToken="b03f5f7f11d50a3a" culture="neutral"/>
+        <bindingRedirect oldVersion="0.0.0.0-4.0.4.1" newVersion="4.0.4.1"/>
+      </dependentAssembly>
+    </assemblyBinding>
+  </runtime>
+  <entityFramework>
+    <defaultConnectionFactory type="System.Data.Entity.Infrastructure.LocalDbConnectionFactory, EntityFramework">
+      <parameters>
+        <parameter value="v11.0"/>
+      </parameters>
+    </defaultConnectionFactory>
+  </entityFramework>
+  <system.diagnostics>
+    <trace autoflush="true" indentsize="0">
+      <listeners>
+        <add name="myAppInsightsListener" type="Microsoft.ApplicationInsights.TraceListener.ApplicationInsightsTraceListener, Microsoft.ApplicationInsights.TraceListener"/>
+      </listeners>
+    </trace>
+  </system.diagnostics>
+</configuration>
+<!--ProjectGuid: 8C7735B5-C768-4C0E-BC5D-D15141C730F4-->
